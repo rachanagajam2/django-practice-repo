@@ -2,10 +2,10 @@ from django.shortcuts import render
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import CourseRegistration,MovieBooking
+from .models import CourseRegistration,MovieBooking,MovieBooking1
 
 
-
+#=================================================================
 
 # Create your views here.
 @csrf_exempt
@@ -68,7 +68,52 @@ def getmulmoviesbyscreen(request,first,second):
         return JsonResponse({"status":"failure","msg":"only get method is allowed"})
     except Exception as e:
         return JsonResponse({"status":"error","msg":"something went wrong"})
+#======================================================================
+#task on queryparamsget code from here and 
+# 1.add genre column in moviebooking model
+# 2.make migrations
+# 3.add data of 10 records ateleast with genre field
+# 4.create api to get the movie details as per genre using path params
+@csrf_exempt
+def insert_movies(request):
+   try:
+        if request.method == "POST":
+            data = json.loads(request.body)
 
+            MovieBooking1.objects.create(
+                moviename=data["movie_name"],
+                genre=data["genre"],
+                showtime=data["show_time"],
+                screenname=data["screen_name"]
+            )
+
+            return JsonResponse({
+                "status": "success",
+                "msg": "records inserted successfully"
+            })
+
+        return JsonResponse({
+            "status": "failure",
+            "message": "only POST method allowed"
+        })
+
+   except Exception as e:
+        return JsonResponse({
+            "status": "error",
+            "message": "something went wrong"
+        })
+@csrf_exempt
+#single param
+def moviesbygenre(request,genre):
+    try:
+        if request.method=="GET":
+            data=MovieBooking1.objects.filter(genre=genre).values()
+            final_data=list(data)
+            return JsonResponse({"status":"success",genre:final_data},status=200)
+        return JsonResponse({"status":"failure","msg":"only get method is allowed"})
+    except Exception as e:
+        return JsonResponse({"status":"error","msg":"something went wrong"})
+#=======================================================================
 def get_students(request):
      if request.method=="GET":
          registrations=CourseRegistration.objects.values()
@@ -104,6 +149,7 @@ def getmultiplestudents(request,course):
          return JsonResponse({"msg":"only get"})
     except Exception as e:
         return JsonResponse({"status":"error","msg":"somethimng went wrong"})
+#----------------------------------
 @csrf_exempt
 def inserting_data(request):
     if request.method=="POST":
@@ -119,7 +165,7 @@ def inserting_data(request):
         except Exception as e:
             return JsonResponse({"Status":"error","meaasge":e})
     return JsonResponse({"message":"Please try on POST method only"})
-
+#====================================
 
 #query params examples
 
@@ -159,3 +205,4 @@ def getStudentsByDegree(request,deg):
     return JsonResponse({"status":"failure","msg":"only get is allowed"})
  except Exception as e :
      return JsonResponse({"status":"error","msg":"somthing went wrong"})
+#=======================================================
