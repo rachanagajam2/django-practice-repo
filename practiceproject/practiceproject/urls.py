@@ -17,11 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from registrations.views import inserting_data,get_students
-
+from registrations.views import getStudentById, getStudentsByDegree,getstudentbycourse,getmultiplestudents
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('reg/',inserting_data),
-    path('get_reg/',get_students)
+    path('get_reg/',get_students),
+    path("student/<int:id>/", getStudentById),
+    path("students/<str:deg>/", getStudentsByDegree),
+    path("getcourse/<str:course_param>/",getstudentbycourse),
+    path("getmulcourse/<str:course>/",getmultiplestudents)
     
 ]
