@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from registrations.views import inserting_data,get_students
-from registrations.views import getStudentById, getStudentsByDegree,getstudentbycourse,getmultiplestudents
+from registrations.views import getStudentById, getStudentsByDegree,getstudentbycourse,getmultiplestudents,BookMyshow,getmoviesbyscreen,getmulmoviesbyscreen
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,6 +26,9 @@ urlpatterns = [
     path("student/<int:id>/", getStudentById),
     path("students/<str:deg>/", getStudentsByDegree),
     path("getcourse/<str:course_param>/",getstudentbycourse),
-    path("getmulcourse/<str:course>/",getmultiplestudents)
+    path("getmulcourse/<str:course>/",getmultiplestudents),
+    path("bookshow/",BookMyshow),
+    path("moviebyscreen/<str:screen>/",getmoviesbyscreen),
+    path("moviebyscreens/<str:first>/<str:second>/",getmulmoviesbyscreen)
     
 ]

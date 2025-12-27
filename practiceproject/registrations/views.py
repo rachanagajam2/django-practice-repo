@@ -2,9 +2,73 @@ from django.shortcuts import render
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import CourseRegistration
+from .models import CourseRegistration,MovieBooking
+
+
+
 
 # Create your views here.
+@csrf_exempt
+def BookMyshow(request):
+    try:
+        if request.method == "POST":
+            data = json.loads(request.body)
+
+            MovieBooking.objects.create(
+                moviename=data["movie_name"],
+                showtime=data["show_time"],
+                screenname=data["screen_name"]
+            )
+
+            return JsonResponse({
+                "status": "success",
+                "msg": "records inserted successfully"
+            })
+
+        return JsonResponse({
+            "status": "failure",
+            "message": "only POST method allowed"
+        })
+
+    except Exception as e:
+        return JsonResponse({
+            "status": "error",
+            "message": "something went wrong"
+        })
+@csrf_exempt
+#single param
+def getmoviesbyscreen(request,screen):
+    try:
+        if request.method=="GET":
+            data=MovieBooking.objects.filter(screenname=screen).values()
+            final_data=list(data)
+            return JsonResponse({"status":"success",screen:final_data},status=200)
+        return JsonResponse({"status":"failure","msg":"only get method is allowed"})
+    except Exception as e:
+        return JsonResponse({"status":"error","msg":"something went wrong"})
+#multiple path params
+def getmulmoviesbyscreen(request,first,second):
+    try:
+        if request.method=="GET":
+            data1=MovieBooking.objects.filter(screenname=first).values()
+            data2=MovieBooking.objects.filter(screenname=second).values()
+            first_data=list(data1)
+            second_data=list(data2)
+            if len(first_data)==0:
+                first_msg="no records"
+            else:
+                first_msg="records fetched"
+            if len(second_data)==0:
+                second_msg="no records"
+            else:
+                second_msg="records fetched"
+            first_data.append(first_msg)
+            second_data.append(second_msg)
+            return JsonResponse({"status":"success",first:first_data,second:second_data},status=200)
+        return JsonResponse({"status":"failure","msg":"only get method is allowed"})
+    except Exception as e:
+        return JsonResponse({"status":"error","msg":"something went wrong"})
+
 def get_students(request):
      if request.method=="GET":
          registrations=CourseRegistration.objects.values()
@@ -55,6 +119,9 @@ def inserting_data(request):
         except Exception as e:
             return JsonResponse({"Status":"error","meaasge":e})
     return JsonResponse({"message":"Please try on POST method only"})
+
+
+#query params examples
 
 student_info = [
     {"id": 1, "name": "vasanth", "degree": "EEE"},
