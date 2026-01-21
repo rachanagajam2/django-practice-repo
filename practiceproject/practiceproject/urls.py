@@ -17,10 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from registrations.views import inserting_data,get_students
-from registrations.views import getStudentById, getStudentsByDegree,getstudentbycourse,getmultiplestudents,BookMyshow,getmoviesbyscreen,getmulmoviesbyscreen,insert_movies,moviesbygenre
+from practiceapp.views import first,second,job1
+from registrations.views import updatescreen,getStudentById, getStudentsByDegree,getstudentbycourse,getmultiplestudents,BookMyshow,getmoviesbyscreen,getmulmoviesbyscreen,insert_movies,moviesbygenre
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('second/',second),
+    path('first/',first),
     path('reg/',inserting_data),
     path('get_reg/',get_students),
     path("student/<int:id>/", getStudentById),
@@ -31,5 +34,7 @@ urlpatterns = [
     path("moviebyscreen/<str:screen>/",getmoviesbyscreen),
     path("moviebyscreens/<str:first>/<str:second>/",getmulmoviesbyscreen),
     path("insert_movies/",insert_movies),
-    path("moviesbygenre/<str:genre>/",moviesbygenre)
+    path("moviesbygenre/<str:genre>/",moviesbygenre),
+    path("updatescreen/<str:ref_screen>/",updatescreen),
+    path("job1/",job1)
 ]

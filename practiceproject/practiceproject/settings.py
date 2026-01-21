@@ -49,6 +49,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+     'practiceapp.middlewares.middleware1',
+     'practiceapp.middlewares.middleware2',
+      'practiceapp.middlewares.sscMiddleware',
+      'practiceapp.middlewares.medicallyFitMiddleware',
+      'practiceapp.middlewares.ageValidationMiddleware'
+
 ]
 
 ROOT_URLCONF = 'practiceproject.urls'

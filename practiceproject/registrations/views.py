@@ -113,6 +113,25 @@ def moviesbygenre(request,genre):
         return JsonResponse({"status":"failure","msg":"only get method is allowed"})
     except Exception as e:
         return JsonResponse({"status":"error","msg":"something went wrong"})
+    
+
+#updating
+@csrf_exempt
+def updatescreen(request,ref_screen):
+    try:
+        if request.method=="PUT":
+            input_data=json.loads(request.body)
+            new_screen=input_data["new_screen"]
+            update=MovieBooking1.objects.filter(screenname=ref_screen).update(screenname=new_screen)
+            if update==0:
+                msg="no records are found"
+            else:
+                msg="updated successfully"
+            return JsonResponse({"status":"success","msg":msg})
+        return JsonResponse({"status":"failure","msg":"only put msg is allowed"})
+    except Exception as e:
+        return JsonResponse({"status":"error","msg":str(e)})
+
 #=======================================================================
 def get_students(request):
      if request.method=="GET":
