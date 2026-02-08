@@ -11,3 +11,12 @@ class order_details(models.Model):
     transcation_id=models.DateTimeField()
 class MovieBooking(models.Model):
     moviename=models.CharField(max_length=50)
+
+
+
+#=========================================
+class User(models.Model):
+    username=models.CharField(max_length=50,unique=True)
+    email=models.EmailField(unique=True)
+    password=models.CharField(max_length=225)
+    role=models.CharField(max_length=225,default="user")

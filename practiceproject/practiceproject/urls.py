@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from registrations.views import inserting_data,get_students
-from practiceapp.views import first,second,job1
+from practiceapp.views import first,second,job1,signup,login,protected_api
 from registrations.views import updatescreen,getStudentById, getStudentsByDegree,getstudentbycourse,getmultiplestudents,BookMyshow,getmoviesbyscreen,getmulmoviesbyscreen,insert_movies,moviesbygenre
 
 urlpatterns = [
@@ -36,5 +36,8 @@ urlpatterns = [
     path("insert_movies/",insert_movies),
     path("moviesbygenre/<str:genre>/",moviesbygenre),
     path("updatescreen/<str:ref_screen>/",updatescreen),
-    path("job1/",job1)
+    path("job1/",job1),
+    path('signup/',signup),
+    path('login/',login),
+    path('protect/',protected_api)
 ]

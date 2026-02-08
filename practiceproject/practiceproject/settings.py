@@ -53,7 +53,8 @@ MIDDLEWARE = [
      'practiceapp.middlewares.middleware2',
       'practiceapp.middlewares.sscMiddleware',
       'practiceapp.middlewares.medicallyFitMiddleware',
-      'practiceapp.middlewares.ageValidationMiddleware'
+      'practiceapp.middlewares.ageValidationMiddleware',
+      'practiceapp.middlewares.authMiddleware'
 
 ]
 
@@ -111,6 +112,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+JWT_SECRET_KEY="mydajngo-project-key"
+JWT_ALGORITHM='HS256'
+JWT_EXP_TIME=60*60
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
